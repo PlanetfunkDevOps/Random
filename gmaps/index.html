@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Maps</title>
+    <style>
+        #map{
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Maps</h1>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            var options = {
+                zoom: 16,
+                center: {
+                    lat:-12.0686500, 
+                    lng:-75.210234
+                }
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+
+            /* Add Listener for Click on the Map */
+            /* google.maps.event.addListener(map, 'click',
+                function(event){
+                    addMarker({coords:event.latLng});
+            }); */
+            
+            /* Multiple Markers and Styles */
+            /* Array for Multiple Markers */
+            var markers = [
+                {
+                    coords: { lat: -12.068852, lng: -75.210330 },
+                    iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    content: '<h3>Planetfunk Dev Ops</h3>'
+                },
+                {
+                    coords: { lat: -12.067490, lng: -75.210997 },
+                    iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    content: '<h3>Planetfunk Dev Ops Yo!</h3>'
+                },
+                {
+                    coords: { lat: -12.068238, lng: -75.210557 },
+                    iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    content: '<h3>Planetfunk Dev Ops Hey!</h3>'
+                }
+            ];
+
+            /* Loop Through Markers */
+            for(var i = 0; i < markers.length; i++){
+                addMarker(markers[i]);
+            }
+
+            /* Add Marker function */
+            function addMarker(props){
+                var marker = new google.maps.Marker({
+                    position: props.coords,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    draggable: false,
+                    icon: props.iconImage
+                });
+
+                if(props.iconImage){
+                    marker.setIcon(props.iconImage);
+                }
+
+                if(props.content){
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: props.content
+                    });
+
+                    marker.addListener('click', function(){
+                        infoWindow.open(map, marker);
+                    });
+                }
+            }
+
+            /* Single Marker and Style */
+            /* var marker = new google.maps.Marker({
+                position: {
+                    lat: -12.068852,
+                    lng: -75.210330
+                },
+                map: map,
+                animation: google.maps.Animation.DROP,
+                draggable: false,
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            });
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: '<h3>Planetfunk Dev Ops</h3>'
+            });
+
+            marker.addListener('click', function(){
+                infoWindow.open(map, marker);
+            }); */
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsXd-A-R5iQXScs3AMw2ph15ko-O1QICk&callback=initMap">
+    </script>
+</body>
+</html>
